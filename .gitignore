@@ -1,7 +1,4 @@
 /wifi.h
-/examples/*/wifi.h
-/examples/*/build
-/examples/*/firmware
-/examples/esp32/*/build
-/examples/esp32/*/firmware
+/build
+/firmware
 .DS_Store
