@@ -59,66 +59,6 @@ void delay(uint32_t ms)
   }
 }
 
-void rainbow(strand_t * pStrand, unsigned long delay_ms, unsigned long timeout_ms)
-{
-  const uint8_t color_div = 4;
-  const uint8_t anim_step = 1;
-  const uint8_t anim_max = pStrand->brightLimit - anim_step;
-  pixelColor_t color1 = pixelFromRGB(anim_max, 0, 0);
-  pixelColor_t color2 = pixelFromRGB(anim_max, 0, 0);
-  uint8_t stepVal1 = 0;
-  uint8_t stepVal2 = 0;
-  bool runForever = (timeout_ms == 0 ? true : false);
-  unsigned long start_ms = millis();
-  while (runForever || (millis() - start_ms < timeout_ms)) {
-    color1 = color2;
-    stepVal1 = stepVal2;
-    for (uint16_t i = 0; i < pStrand->numPixels; i++) {
-      pStrand->pixels[i] = pixelFromRGB(color1.r/color_div, color1.g/color_div, color1.b/color_div);
-      if (i == 1) {
-        color2 = color1;
-        stepVal2 = stepVal1;
-      }
-      switch (stepVal1) {
-        case 0:
-        color1.g += anim_step;
-        if (color1.g >= anim_max)
-          stepVal1++;
-        break;
-        case 1:
-        color1.r -= anim_step;
-        if (color1.r == 0)
-          stepVal1++;
-        break;
-        case 2:
-        color1.b += anim_step;
-        if (color1.b >= anim_max)
-          stepVal1++;
-        break;
-        case 3:
-        color1.g -= anim_step;
-        if (color1.g == 0)
-          stepVal1++;
-        break;
-        case 4:
-        color1.r += anim_step;
-        if (color1.r >= anim_max)
-          stepVal1++;
-        break;
-        case 5:
-        color1.b -= anim_step;
-        if (color1.b == 0)
-          stepVal1 = 0;
-        break;
-      }
-    }
-    digitalLeds_updatePixels(pStrand);
-    delay(delay_ms);
-  }
-  digitalLeds_resetPixels(pStrand);
-}
-
-
 // Global variables
 float led_hue = 0;              // hue is scaled 0 to 360
 float led_saturation = 59;      // saturation is scaled 0 to 100
@@ -193,7 +133,6 @@ void hsi2rgbw(float H, float S, float I, pixelColor_t* rgbw) {
   I /= 100;
   S = S>0?(S<1?S:1):0; // clamp S and I to interval [0,1]
   I = I>0?(I<1?I:1):0;
-  I = I * sqrt(I);                    // shape intensity to have finer granularity near 0
   
   if(H < 2.09439) {
     cos_h = cos(H);
@@ -392,26 +331,3 @@ void app_main(void) {
 
   wifi_init();
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

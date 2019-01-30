@@ -1,6 +1,6 @@
 PROJECT_NAME = ledstrip
 
-CFLAGS += -I$(abspath ../../..) -DHOMEKIT_SHORT_APPLE_UUIDS -DHOMEKIT_MAX_CLIENTS=8
+CFLAGS += -I$(abspath ../../..) -DHOMEKIT_SHORT_APPLE_UUIDS
 
 EXTRA_COMPONENT_DIRS += $(abspath ../../../components)
 

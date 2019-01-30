@@ -1,0 +1,10 @@
+{
+    "C_Cpp.default.includePath": ["/home/christoph/esp/esp-idf/components/"],
+    "browse" : {
+        "limitSymbolsToIncludedHeaders" : true,
+        "databaseFilename" : ""
+    },
+    "files.associations": {
+        "wifi_config.h": "c"
+    }
+}
